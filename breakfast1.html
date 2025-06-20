@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amity University Cafeteria - Breakfast Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3a6e;       /* Deep blue */
+            --secondary-color: #d4a017;     /* Gold */
+            --accent-color: #e74c3c;        /* Vibrant red */
+            --light-bg: #f8f9fa;            /* Light gray */
+            --dark-text: #2c3e50;           /* Dark blue-gray */
+            --light-text: #ecf0f1;          /* Light gray */
+            --card-bg: #ffffff;             /* Pure white */
+            --success-color: #28a745;       /* Green */
+            --error-color: #dc3545;        /* Red */
+            --warning-color: #ffc107;      /* Yellow */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+             font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            color: var(--dark-text);
+            line-height: 1.6;
+
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(248, 249, 250, 0.9);
+            z-index: -1;
+        }
+
+        header {
+            background: var(--primary-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .uni-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .system-title {
+            color: var(--light-text);
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+        }
+
+        /* === MAIN CONTENT === */
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .menu-section {
+            width: 65%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .menu-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        .menu-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .menu-table th {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }        .menu-table td {
+            background-color: var(--light-bg);
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+        }
+
+        .menu-table td:first-child strong,
+        .menu-table td:nth-child(3) strong {
+            font-size: 1.3rem;
+            color: var(--dark-text);
+        }
+
+        .menu-table tr:hover td {
+            background-color: #e9ecef;
+        }.food-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--secondary-color);
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .food-img:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-item-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item-img:hover {
+            transform: scale(1.05);
+        }
+
+        .add-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .add-btn:hover {
+            background-color: #e8d9b5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* === CART SECTION === */
+        .cart-section {
+            width: 32%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            border: 2px solid var(--secondary-color);
+            height: fit-content;
+        }
+
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .cart-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        #cartItems {
+            margin-bottom: 1.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .cart-item-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .cart-item-price {
+            margin: 0 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            background-color: var(--error-color);
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333;
+            transform: scale(1.1);
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: right;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+        .pay-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            width: 100%;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .pay-btn:hover {
+            background-color: #122a52;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* === PAYMENT SECTION === */
+        #paymentSection {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .payment-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .payment-method {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--light-bg);
+        }
+
+        .payment-method:hover, .payment-method.selected {
+            background-color: #e9ecef;
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .payment-method input {
+            margin-right: 10px;
+        }
+
+        .payment-details {
+            margin-top: 15px;
+            display: none;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.3);
+        }
+
+        .payment-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .error {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        /* === THANK YOU MODAL === */
+        .thank-you-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }        /* Party confetti styles */
+        .confetti {
+            width: 10px;
+            height: 10px;
+            background-color: #f39c12;
+            position: absolute;
+            animation: confetti-fall 3s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .thank-you-content {
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .thank-you-content h2 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .thank-you-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .cooking-animation {
+            margin: 0 auto 2rem;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cooking-animation i {
+            font-size: 5rem;
+            color: var(--secondary-color);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .close-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .close-btn:hover {
+            background-color: #122a52;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .item-added {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #d4a017;  /* Mustard yellow color */
+            color: #1a3a6e;  /* Primary color for text */
+            padding: 12px 25px;
+            border-radius: 5px;
+            z-index: 100;
+            display: none;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; top: 10px; }
+            20%, 80% { opacity: 1; top: 20px; }
+        }
+
+        /* === FOOTER === */
+        footer {
+            background: var(--primary-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        .footer-text {
+            color: var(--light-text);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons a {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--light-text);
+            transform: translateY(-5px) scale(1.2);
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 1200px) {
+            .menu-section {
+                width: 60%;
+            }
+            
+            .cart-section {
+                width: 38%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                padding: 1.5rem;
+            }
+            
+            .menu-section, .cart-section {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .menu-title, .cart-title {
+                font-size: 1.8rem;
+            }
+            
+            .menu-table th, .menu-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+              .food-img, .menu-item-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .add-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .thank-you-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .thank-you-content h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="uni-title">AMITY UNIVERSITY</h1>
+        <h2 class="system-title">BREAKFAST MENU</h2>
+    </header>
+
+    <div class="main-container">
+        <section class="menu-section">
+            <h2 class="menu-title">Morning Delights</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Breakfast Item</th>
+                        <th>Image</th>
+                        <th>Price (Rs)</th>
+                        <th>Cart</th>
+                    </tr>
+                </thead>                <tbody>                    <tr>
+                        <td><strong>Poha</strong></td>                        <td><img src="Poha.jpg" alt="Poha" class="food-img" width="200" height="200"></td>
+                        <td><strong>40</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Poha', 40)">Add</button></td>
+                    </tr>                    <tr>
+                        <td><strong>Idli</strong></td>
+                        <td><img src="Idli.jpg" alt="Idli" class="food-img"></td>
+                        <td><strong>25</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Idli', 25)">Add</button></td>
+                    </tr>                    <tr>
+                        <td><strong>Plain Dosa</strong></td>
+                        <td><img src="dosa.jpg" alt="Plain Dosa" class="food-img"></td>
+                        <td><strong>30</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Plain Dosa', 30)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Masala Dosa</strong></td>
+                        <td><img src="Masaladosa.webp" alt="Masala Dosa" class="food-img"></td>
+                        <td><strong>40</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Masala Dosa', 40)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chapati</strong></td>
+                        <td><img src="Chapthi.webp" alt="Chapati" class="food-img"></td>
+                        <td><strong>30</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Chapati', 30)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Idli & Vada</strong></td>
+                        <td><img src="Idli(vada).jpg" alt="Idli & Vada" class="food-img"></td>
+                        <td><strong>40</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Idli & Vada', 40)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vada</strong></td>
+                        <td><img src="Vda.webp" alt="Vada" class="food-img"></td>
+                        <td><strong>15</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Vada', 15)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tea</strong></td>
+                        <td><img src="Tea.jpg" alt="Tea" class="food-img"></td>
+                        <td><strong>10</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Tea', 10)">Add</button></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coffee</strong></td>
+                        <td><img src="Coffee.jpeg" alt="Coffee" class="food-img"></td>
+                        <td><strong>10</strong></td>
+                        <td><button class="add-btn" onclick="addToCart('Coffee', 10)">Add</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="cart-section">
+            <h2 class="cart-title">Your Order</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="total">Total: Rs 0</div>
+            
+            <button id="payNowBtn" class="pay-btn" onclick="showPayment()">Proceed to Payment</button>
+            
+            <div id="paymentSection">
+                <h3 class="payment-title">Payment Options</h3>
+                
+                <div class="payment-method" onclick="selectPaymentMethod('upi')">
+                    <input type="radio" name="payment" id="upi" value="upi"> 
+                    <label for="upi"><strong>UPI Payment</strong></label>
+                </div>
+                
+                <div id="upiDetails" class="payment-details">
+                    <label for="upiId">Enter UPI ID:</label>
+                    <input type="text" id="upiId" class="form-control" placeholder="example@upi">
+                </div>
+                
+                <div class="payment-method" onclick="selectPaymentMethod('card')">
+                    <input type="radio" name="payment" id="card" value="card"> 
+                    <label for="card"><strong>Debit/Credit Card</strong></label>
+                </div>
+                
+                <div id="cardDetails" class="payment-details">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <div style="flex: 1;">
+                            <label for="expiry">Expiry (MM/YY):</label>
+                            <input type="text" id="expiry" class="form-control" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="cvv">CVV:</label>
+                            <input type="password" id="cvv" class="form-control" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="pay-btn" onclick="processPayment()">Confirm Payment</button>
+                
+                <div id="paymentStatus" class="payment-status"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="thankYouModal" class="thank-you-container">
+        <div class="thank-you-content">
+            <div class="cooking-animation">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h2>Thank You for Your Order!</h2>
+            <p>Your breakfast is being prepared with care and will be ready soon.</p>
+            <p id="orderItems" style="font-size: 0.9rem; color: var(--dark-text); font-style: italic;"></p>
+            <button class="close-btn" onclick="closeThankYou()">Place New Order</button>
+        </div>
+    </div>
+
+    <!-- Animation elements -->
+    <div id="jumpingMan" class="jumping-man">🏃‍♂️</div>
+    <div id="itemAdded" class="item-added">Item added to cart!</div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="footer-text">
+            AMITY UNIVERSITY BANGALORE • ESTD 2023
+        </p>
+        <p class="footer-text">
+            © 2025 AMITY CAFETERIA • ALL RIGHTS RESERVED
+        </p>
+    </footer>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+        let paymentProcessed = false;
+
+        function addToCart(item, price) {
+            // If payment already processed, start a new order
+            if (paymentProcessed) {
+                resetOrder();
+            }
+            
+            cart.push({ item, price });
+            totalAmount += price;
+            updateCart();
+            
+            // Show animation
+            showAddToCartAnimation();
+        }        function showAddToCartAnimation() {
+            const itemAdded = document.getElementById('itemAdded');
+            
+            // Show item added message
+            itemAdded.style.display = 'block';
+            itemAdded.style.animation = 'none';
+            void itemAdded.offsetWidth; // Trigger reflow
+            itemAdded.style.animation = 'fadeInOut 2s ease-in-out';
+            
+            // Hide after animation
+            setTimeout(() => {
+                itemAdded.style.display = 'none';
+            }, 2000);
+        }
+
+        function updateCart() {
+            const cartDiv = document.getElementById('cartItems');
+            cartDiv.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartDiv.innerHTML = '<p style="text-align: center; color: #666;">Your cart is empty</p>';
+                document.getElementById('total').textContent = 'Total: Rs 0';
+                return;
+            }
+            
+            cart.forEach(({ item, price }, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'cart-item-name';
+                nameSpan.textContent = item;
+                
+                const priceSpan = document.createElement('span');
+                priceSpan.className = 'cart-item-price';
+                priceSpan.textContent = `Rs ${price}`;
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.onclick = () => removeFromCart(index);
+                
+                itemDiv.appendChild(nameSpan);
+                itemDiv.appendChild(priceSpan);
+                itemDiv.appendChild(removeBtn);
+                
+                cartDiv.appendChild(itemDiv);
+            });
+            
+            document.getElementById('total').textContent = `Total: Rs ${totalAmount}`;
+        }
+        
+        function removeFromCart(index) {
+            const item = cart[index];
+            totalAmount -= item.price;
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function showPayment() {
+            if (cart.length === 0) {
+                alert("Your cart is empty! Please add items before proceeding to payment.");
+                return;
+            }
+            document.getElementById("paymentSection").style.display = "block";
+            document.getElementById("payNowBtn").style.display = "none";
+        }
+          function selectPaymentMethod(method) {
+            // First, reset all
+            document.querySelectorAll('.payment-method').forEach(div => {
+                div.classList.remove('selected');
+            });
+            document.querySelectorAll('.payment-details').forEach(div => {
+                div.style.display = 'none';
+            });
+            
+            // Clear previous inputs
+            if (method === 'upi') {
+                document.getElementById('cardNumber').value = '';
+                document.getElementById('expiry').value = '';
+                document.getElementById('cvv').value = '';
+            } else {
+                document.getElementById('upiId').value = '';
+            }
+            
+            // Then select the chosen one
+            document.getElementById(method).checked = true;
+            document.getElementById(method).parentElement.classList.add('selected');
+            document.getElementById(`${method}Details`).style.display = 'block';
+            
+            // Reset payment status
+            document.getElementById('paymentStatus').style.display = 'none';
+        }
+
+        function processPayment() {
+            const selectedMethod = document.querySelector('input[name="payment"]:checked');
+            
+            if (!selectedMethod) {
+                showPaymentStatus('Please select a payment method', 'error');
+                return;
+            }
+            
+            const method = selectedMethod.value;
+            
+            // Show processing message
+            showPaymentStatus('Processing payment...', 'pending');
+            
+            // Simulate payment processing with a delay
+            setTimeout(() => {
+                let success = true;
+                let message = '';
+                
+                switch (method) {
+                    case 'upi':
+                        const upiId = document.getElementById('upiId').value.trim();
+                        const upiRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z]{3,}$/;
+                        if (!upiId || !upiRegex.test(upiId)) {
+                            success = false;
+                            message = 'Please enter a valid UPI ID (e.g., user@upi)';
+                        } else {
+                            message = `Payment of Rs ${totalAmount} successful via UPI (${upiId})`;
+                        }
+                        break;
+                        
+                    case 'card':
+                        const cardNumber = document.getElementById('cardNumber').value.trim();
+                        const expiry = document.getElementById('expiry').value.trim();
+                        const cvv = document.getElementById('cvv').value.trim();
+                        
+                        if (!cardNumber || cardNumber.replace(/\s/g, '').length !== 16) {
+                            success = false;
+                            message = 'Please enter a valid 16-digit card number';
+                        } else if (!expiry || !expiry.match(/^\d{2}\/\d{2}$/)) {
+                            success = false;
+                            message = 'Please enter a valid expiry date (MM/YY)';
+                        } else if (!cvv || cvv.length !== 3) {
+                            success = false;
+                            message = 'Please enter a valid 3-digit CVV';
+                        } else {
+                            const maskedCard = cardNumber.slice(-4).padStart(16, '*').replace(/(.{4})/g, '$1 ').trim();
+                            message = `Payment of Rs ${totalAmount} successful via Card (${maskedCard})`;
+                        }
+                        break;
+                }
+                
+                if (success) {
+                    paymentProcessed = true;
+                    showPaymentStatus(message, 'success');
+                    
+                    // Show thank you message after a short delay
+                    setTimeout(() => {
+                        document.getElementById("paymentSection").style.display = "none";
+                        document.getElementById("payNowBtn").style.display = "block";
+                        document.getElementById("payNowBtn").textContent = "Place New Order";
+                        
+                        // Prepare order summary
+                        const orderSummary = cart.map(item => item.item).join(', ');
+                        document.getElementById('orderItems').textContent = `Order: ${orderSummary}`;
+                        
+                        // Show thank you modal
+                        document.getElementById('thankYouModal').style.display = 'flex';
+                        
+                        // Create party confetti effect
+                        createConfetti();
+                    }, 1500);
+                } else {
+                    showPaymentStatus(message, 'error');
+                }
+            }, 1500);
+        }
+
+        function createConfetti() {
+            // Number of confetti pieces
+            const confettiCount = 100;
+            const colors = ['#f39c12', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random position
+                confetti.style.left = Math.random() * 100 + 'vw';
+                
+                // Random color
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random size
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                // Random rotation
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                // Random animation delay
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        function showPaymentStatus(message, type) {
+            const statusDiv = document.getElementById('paymentStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = 'payment-status ' + type;
+            statusDiv.style.display = 'block';
+        }
+        
+        function resetOrder() {
+            cart = [];
+            totalAmount = 0;
+            paymentProcessed = false;
+            updateCart();
+            document.getElementById('paymentStatus').style.display = 'none';
+            document.getElementById('payNowBtn').textContent = 'Proceed to Payment';
+            document.getElementById('payNowBtn').style.display = 'block';
+            
+            // Reset form fields
+            document.getElementById('upiId').value = '';
+            document.getElementById('cardNumber').value = '';
+            document.getElementById('expiry').value = '';
+            document.getElementById('cvv').value = '';
+            
+            // Unselect payment methods
+            document.querySelectorAll('input[name="payment"]').forEach(input => {
+                input.checked = false;
+            });
+            document.querySelectorAll('.payment-method').forEach(div => {
+                div.classList.remove('selected');
+            });
+            document.querySelectorAll('.payment-details').forEach(div => {
+                div.style.display = 'none';
+            });
+        }
+        
+        function closeThankYou() {
+            document.getElementById('thankYouModal').style.display = 'none';
+            resetOrder();
+        }
+        
+        // Format card number with spaces after every 4 digits
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            if (value.length > 16) value = value.substr(0, 16);
+            e.target.value = value.replace(/(.{4})/g, '$1 ').trim();
+        });
+        
+         document.getElementById('expiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+
+            // Validate month when user finishes typing
+            if (value.length >= 2) {
+                let month = parseInt(value.substring(0, 2));
+                if (month < 1 || month > 12) {
+                    e.target.setCustomValidity('Invalid month');
+                } else {
+                    e.target.setCustomValidity('');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
