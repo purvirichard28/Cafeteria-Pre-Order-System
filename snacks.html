@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amity University Cafeteria - Snacks Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3a6e;       /* Deep blue */
+            --secondary-color: #d4a017;     /* Gold */
+            --accent-color: #e74c3c;        /* Vibrant red */
+            --light-bg: #f8f9fa;            /* Light gray */
+            --dark-text: #2c3e50;           /* Dark blue-gray */
+            --light-text: #ecf0f1;          /* Light gray */
+            --card-bg: #ffffff;             /* Pure white */
+            --success-color: #28a745;       /* Green */
+            --error-color: #dc3545;        /* Red */
+            --warning-color: #ffc107;      /* Yellow */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            color: var(--dark-text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            .menu-section {
+                width: 60%;
+            }
+            
+            .cart-section {
+                width: 38%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                padding: 1.5rem;
+            }
+            
+            .menu-section, .cart-section {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .menu-title, .cart-title {
+                font-size: 1.8rem;
+            }
+            
+            .menu-table th, .menu-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .food-img {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .add-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }header {
+            background: var(--primary-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .uni-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .system-title {
+            color: var(--light-text);
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-top: 0.5rem;
+        }
+
+        .menu-section {
+            width: 65%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--secondary-color);
+        }    .menu-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .menu-table th {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .menu-table td {
+            background-color: var(--light-bg);
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .menu-table tr:hover td {
+            background-color: #e9ecef;
+        }
+
+        .add-btn {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+    button:hover {
+      background-color: #8c6f00;
+    }    .cart-section {
+            width: 32%;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            border: 2px solid var(--secondary-color);
+            height: fit-content;
+        }
+
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .cart-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: var(--light-bg);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+    #total {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #6e5b00;
+    }
+
+    .pay-button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #d4af37;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .pay-button:hover {
+      background-color: #b38f00;
+    }
+    
+    .payment-method {
+      margin: 12px 0;
+      padding: 10px;
+      border: 1px solid #e0d7b3;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .payment-method:hover, .payment-method.selected {
+      background-color: #f0e6b4;
+      border-color: #d4af37;
+    }
+    
+    .payment-method input {
+      margin-right: 10px;
+    }
+    
+    .payment-details {
+      margin-top: 15px;
+      display: none;
+      padding: 10px;
+      background-color: #f0e6b4;
+      border-radius: 6px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #e0d7b3;
+      box-sizing: border-box;
+    }
+    
+    .payment-status {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+    
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .pending {
+      background-color: #fff8dc;
+      color: #6e5b00;
+      border: 1px solid #e0d7b3;
+    }
+    
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .thank-you-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      flex-direction: column;
+      color: white;
+      text-align: center;
+    }
+    
+    .thank-you-content {
+      background-color: #fff8dc;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      color: #6e5b00;
+    }
+    
+    .thank-you-content h2 {
+      color: #b38f00;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    
+    .thank-you-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    .cooking-animation {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+    }
+    
+    .close-button {
+      background-color: #b38f00;
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    
+    .close-button:hover {
+      background-color: #8c6f00;
+    }
+    
+    .cooking-animation img {
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }    /* Animation styles */
+    .item-added {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #b38f00;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 100;
+      display: none;
+      animation: fadeInOut 2s ease-in-out;
+    }
+    
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; top: 10px; }
+      20%, 80% { opacity: 1; top: 20px; }
+    }
+    
+    .menu-item-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .quantity-control button {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    
+    .quantity-control button:hover {
+      background-color: #b38f00;
+      transform: translateY(-2px);
+    }
+
+    .quantity-display {
+      margin: 0 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+
+    /* Button styling */
+    .add-btn, .pay-button, button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-btn:hover, .pay-button:hover, button:hover {
+    background-color: #b38f00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Footer styling */
+footer {
+    background: var(--primary-color);
+    padding: 2rem;
+    text-align: center;
+    margin-top: auto;
+    border-top: 5px solid var(--secondary-color);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.footer-text {
+    color: var(--light-text);
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1.5rem 0;
+}
+
+.social-icons a {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.social-icons a:hover {
+    color: var(--light-text);
+    transform: translateY(-5px);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+  </style>
+</head>
+<body>
+    <header>
+        <h1 class="uni-title">AMITY UNIVERSITY</h1>
+        <h2 class="system-title">SNACKS MENU</h2>
+    </header>
+
+    <div class="main-container">
+        <section class="menu-section">
+            <h2 class="menu-title">Delightful Snacks</h2>
+            <table class="menu-table">
+      <thead>
+        <tr>
+          <th>Snack Item</th>
+          <th>Price (Rs)</th>
+          <th>Quantity</th>
+          <th>Add</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>            <img src="snadwitch.jpeg" class="menu-item-img">
+            <br>Sandwich
+          </td>
+          <td>40</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Sandwich', 40, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="samosa.jpeg" class="menu-item-img">
+            <br>Samosa
+          </td>
+          <td>15</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Samosa', 15, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Tea.jpg" class="menu-item-img">
+            <br>Tea
+          </td>
+          <td>10</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Tea', 10, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Coffee.jpeg" class="menu-item-img">
+            <br>Coffee
+          </td>
+          <td>10</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Coffee', 10, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Pani puri.jpeg" class="menu-item-img">
+            <br>Pani Puri
+          </td>
+          <td>30</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Pani Puri', 30, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Dhai puri.jpeg" class="menu-item-img">
+            <br>Dahi Puri
+          </td>
+          <td>35</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Dahi Puri', 35, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Gobi.jpeg" class="menu-item-img">
+            <br>Gobi Manchurian
+          </td>
+          <td>60</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Gobi Manchurian', 60, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Veg burger.jpeg" class="menu-item-img">
+            <br>Veg Burger
+          </td>
+          <td>80</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Veg Burger', 80, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Veg cheese burger.jpeg" class="menu-item-img">
+            <br>Veg Cheese Burger
+          </td>
+          <td>90</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Veg Cheese Burger', 90, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Veg momos.jpeg" class="menu-item-img">
+            <br>Veg Fried Momos
+          </td>
+          <td>70</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Veg Fried Momos', 70, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Nuggets.jpeg" class="menu-item-img">
+            <br>Nuggets
+          </td>
+          <td>60</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Nuggets', 60, this)">Add</button></td>
+        </tr>
+        <tr>
+          <td>            <img src="Blue mojito.jpeg" class="menu-item-img">
+            <br>Blue Mojito
+          </td>
+          <td>50</td>
+          <td>
+            <div class="quantity-control">
+              <button onclick="decreaseQuantity(this)">-</button>
+              <span class="quantity-display">1</span>
+              <button onclick="increaseQuantity(this)">+</button>
+            </div>
+          </td>
+          <td><button onclick="addToCart('Blue Mojito', 50, this)">Add</button></td>
+        </tr>
+      </tbody>
+    </table>        </section>
+
+        <section class="cart-section">
+            <h2 class="cart-title">Your Order</h2>
+    <div id="cartItems"></div>
+    <div id="total">Total: Rs 0</div>
+    
+    <button id="payNowBtn" class="pay-button" onclick="showPayment()">Pay Now</button>
+    
+    <div id="paymentSection" style="display: none; margin-top: 20px;">
+      <h3 style="color: #b38f00; margin-bottom: 15px;">Payment Options</h3>
+      
+      <div class="payment-method" onclick="selectPaymentMethod('upi')">
+        <input type="radio" name="payment" id="upi" value="upi"> 
+        <label for="upi"><strong>UPI Payment</strong></label>
+      </div>
+      
+      <div id="upiDetails" class="payment-details">
+        <label for="upiId">Enter UPI ID:</label>
+        <input type="text" id="upiId" class="form-control" placeholder="example@upi">
+      </div>
+      
+      <div class="payment-method" onclick="selectPaymentMethod('card')">
+        <input type="radio" name="payment" id="card" value="card"> 
+        <label for="card"><strong>Debit/Credit Card</strong></label>
+      </div>
+      
+      <div id="cardDetails" class="payment-details">
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+        
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label for="expiry">Expiry (MM/YY):</label>
+            <input type="text" id="expiry" class="form-control" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div style="flex: 1;">
+            <label for="cvv">CVV:</label>
+            <input type="password" id="cvv" class="form-control" placeholder="123" maxlength="3">
+          </div>
+        </div>
+      </div>
+      
+      <button class="pay-button" onclick="processPayment()">Confirm Payment</button>
+      
+      <div id="paymentStatus" class="payment-status"></div>
+    </div>
+  </div>
+    <div id="thankYouModal" class="thank-you-container">
+        <div class="thank-you-content">
+            <div class="cooking-animation">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h2>Thank You for Your Order!</h2>
+            <p>Your snacks are being prepared with care and will be ready soon.</p>
+            <p id="orderItems" style="font-size: 0.9rem; color: var(--dark-text); font-style: italic;"></p>
+            <button class="close-btn" onclick="closeThankYou()">Place New Order</button>
+        </div>
+    </div>    <!-- Animation elements -->
+    <div id="itemAdded" class="item-added">Item added to cart!</div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="footer-text">
+            AMITY UNIVERSITY BANGALORE • ESTD 2023
+        </p>
+        <p class="footer-text">
+            © 2025 AMITY CAFETERIA • ALL RIGHTS RESERVED
+        </p>
+    </footer>    <script>
+    let cart = [];
+    let totalAmount = 0;
+    let paymentProcessed = false;
+
+    function addToCart(item, price, buttonElement) {
+      const row = buttonElement.closest('tr');
+      const quantityElement = row.querySelector('.quantity-display');
+      const quantity = parseInt(quantityElement.textContent);
+      
+      // If payment already processed, start a new order
+      if (paymentProcessed) {
+        resetOrder();
+      }
+      
+      // Check if item is already in cart
+      const existingItemIndex = cart.findIndex(cartItem => cartItem.item === item);
+      
+      if (existingItemIndex !== -1) {
+        // Update quantity if item exists
+        cart[existingItemIndex].quantity += quantity;
+        cart[existingItemIndex].price += price * quantity;
+      } else {
+        // Add new item to cart
+        cart.push({
+          item: item,
+          price: price * quantity,
+          quantity: quantity
+        });
+      }
+      
+      totalAmount += price * quantity;
+      
+      // Reset quantity to 1
+      quantityElement.textContent = '1';
+      
+      updateCart();
+      
+      // Show animation
+      showAddToCartAnimation();
+    }    function showAddToCartAnimation() {
+      const itemAdded = document.getElementById('itemAdded');
+      
+      // Show item added message
+      itemAdded.style.display = 'block';
+      itemAdded.style.animation = 'none';
+      void itemAdded.offsetWidth; // Trigger reflow
+      itemAdded.style.animation = 'fadeInOut 2s ease-in-out';
+      
+      // Hide after animation
+      setTimeout(() => {
+        itemAdded.style.display = 'none';
+      }, 2000);
+    }
+
+    function updateCart() {
+      const cartDiv = document.getElementById('cartItems');
+      cartDiv.innerHTML = '';
+      
+      if (cart.length === 0) {
+        cartDiv.innerHTML = '<div class="cart-item">Your cart is empty</div>';
+      } else {
+        cart.forEach(({ item, price, quantity }, index) => {
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          
+          const itemSpan = document.createElement('span');
+          itemSpan.textContent = `${item} × ${quantity}`;
+          
+          const priceSpan = document.createElement('span');
+          priceSpan.textContent = `Rs ${price}`;
+          
+          const removeBtn = document.createElement('button');
+          removeBtn.textContent = '×';
+          removeBtn.style.padding = '0 6px';
+          removeBtn.style.marginLeft = '8px';
+          removeBtn.style.backgroundColor = '#dc3545';
+          removeBtn.style.borderRadius = '50%';
+          removeBtn.onclick = () => removeFromCart(index);
+          
+          div.appendChild(itemSpan);
+          div.appendChild(priceSpan);
+          div.appendChild(removeBtn);
+          
+          cartDiv.appendChild(div);
+        });
+      }
+      
+      document.getElementById('total').textContent = `Total: Rs ${totalAmount}`;
+    }
+    
+    function removeFromCart(index) {
+      const item = cart[index];
+      totalAmount -= item.price;
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function increaseQuantity(button) {
+      const quantityElement = button.parentElement.querySelector('.quantity-display');
+      let quantity = parseInt(quantityElement.textContent);
+      quantityElement.textContent = quantity + 1;
+    }
+    
+    function decreaseQuantity(button) {
+      const quantityElement = button.parentElement.querySelector('.quantity-display');
+      let quantity = parseInt(quantityElement.textContent);
+      if (quantity > 1) {
+        quantityElement.textContent = quantity - 1;
+      }
+    }
+
+    function showPayment() {
+      if (cart.length === 0) {
+        alert("Your cart is empty! Please add items before proceeding to payment.");
+        return;
+      }
+      document.getElementById("paymentSection").style.display = "block";
+      document.getElementById("payNowBtn").style.display = "none";
+    }
+    
+    function selectPaymentMethod(method) {
+      // First, reset all
+      document.querySelectorAll('.payment-method').forEach(div => {
+        div.classList.remove('selected');
+      });
+      document.querySelectorAll('.payment-details').forEach(div => {
+        div.style.display = 'none';
+      });
+      
+      // Then select the chosen one
+      document.getElementById(method).checked = true;
+      document.getElementById(method).parentElement.classList.add('selected');
+      document.getElementById(`${method}Details`).style.display = 'block';
+    }
+
+    function processPayment() {
+      const selectedMethod = document.querySelector('input[name="payment"]:checked');
+      
+      if (!selectedMethod) {
+        showPaymentStatus('Please select a payment method', 'error');
+        return;
+      }
+      
+      const method = selectedMethod.value;
+      
+      // Show processing message
+      showPaymentStatus('Processing payment...', 'pending');
+      
+      // Simulate payment processing with a delay
+      setTimeout(() => {
+        let success = true;
+        let message = '';
+        
+        switch (method) {
+          case 'upi':
+            const upiId = document.getElementById('upiId').value.trim();
+            if (!upiId) {
+              success = false;
+              message = 'Please enter a valid UPI ID';
+            } else {
+              message = `Payment of Rs ${totalAmount} successful via UPI (${upiId})`;
+            }
+            break;
+            
+          case 'card':
+            const cardNumber = document.getElementById('cardNumber').value.trim();
+            const expiry = document.getElementById('expiry').value.trim();
+            const cvv = document.getElementById('cvv').value.trim();
+            
+            if (!cardNumber || cardNumber.replace(/\s/g, '').length !== 16) {
+              success = false;
+              message = 'Please enter a valid 16-digit card number';
+            } else if (!expiry || !expiry.match(/^\d{2}\/\d{2}$/)) {
+              success = false;
+              message = 'Please enter a valid expiry date (MM/YY)';
+            } else if (!cvv || cvv.length !== 3) {
+              success = false;
+              message = 'Please enter a valid 3-digit CVV';
+            } else {
+              const maskedCard = cardNumber.slice(-4).padStart(16, '*').replace(/(.{4})/g, '$1 ').trim();
+              message = `Payment of Rs ${totalAmount} successful via Card (${maskedCard})`;
+            }
+            break;
+        }
+        
+        if (success) {
+          paymentProcessed = true;
+          showPaymentStatus(message, 'success');
+          
+          // Show thank you message after a short delay
+          setTimeout(() => {
+            document.getElementById("paymentSection").style.display = "none";
+            document.getElementById("payNowBtn").style.display = "block";
+            document.getElementById("payNowBtn").textContent = "Place New Order";
+            
+            // Prepare order summary
+            const orderSummary = cart.map(item => `${item.item} × ${item.quantity}`).join(', ');
+            document.getElementById('orderItems').textContent = `Order: ${orderSummary}`;
+            
+            // Show thank you modal
+            document.getElementById('thankYouModal').style.display = 'flex';
+          }, 1500);
+        } else {
+          showPaymentStatus(message, 'error');
+        }
+      }, 1500);
+    }
+    
+    function showPaymentStatus(message, type) {
+      const statusDiv = document.getElementById('paymentStatus');
+      statusDiv.textContent = message;
+      statusDiv.className = 'payment-status ' + type;
+      statusDiv.style.display = 'block';
+    }
+    
+    function resetOrder() {
+      cart = [];
+      totalAmount = 0;
+      paymentProcessed = false;
+      updateCart();
+      document.getElementById('paymentStatus').style.display = 'none';
+      document.getElementById('payNowBtn').textContent = 'Pay Now';
+      
+      // Reset form fields
+      document.getElementById('upiId').value = '';
+      document.getElementById('cardNumber').value = '';
+      document.getElementById('expiry').value = '';
+      document.getElementById('cvv').value = '';
+      
+      // Unselect payment methods
+      document.querySelectorAll('input[name="payment"]').forEach(input => {
+        input.checked = false;
+      });
+      document.querySelectorAll('.payment-method').forEach(div => {
+        div.classList.remove('selected');
+      });
+      document.querySelectorAll('.payment-details').forEach(div => {
+        div.style.display = 'none';
+      });
+    }
+    
+    function closeThankYou() {
+      document.getElementById('thankYouModal').style.display = 'none';
+      resetOrder();
+    }
+    
+    // Format card number with spaces after every 4 digits
+    document.getElementById('cardNumber').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      if (value.length > 16) value = value.substr(0, 16);
+      e.target.value = value.replace(/(.{4})/g, '$1 ').trim();
+    });
+    
+    // Format expiry date with slash
+    document.getElementById('expiry').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length > 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    });
+    </script>
+    
+    <script>
+    // Student/Staff modal functionality
+    const studentModal = document.getElementById('studentModal');
+    const staffModal = document.getElementById('staffModal');
+    const closeButtons = document.querySelectorAll('.close');
+    const notification = document.getElementById('notification');
+    const menuGrid = document.querySelector('.menu-grid');
+
+    function openStudentModal() {
+        studentModal.style.display = 'block';
+    }
+
+    function openStaffModal() {
+        staffModal.style.display = 'block';
+    }
+
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            studentModal.style.display = 'none';
+            staffModal.style.display = 'none';
+        });
+    });
+
+    window.onclick = function(event) {
+        if (event.target == studentModal || event.target == staffModal) {
+            studentModal.style.display = 'none';
+            staffModal.style.display = 'none';
+        }
+    };
+
+    function showNotification(message, isError = false) {
+        notification.textContent = message;
+        notification.className = 'notification show' + (isError ? ' error' : '');
+        setTimeout(() => {
+            notification.className = 'notification';
+        }, 3000);
+    }
+
+    document.getElementById('studentForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('studentEmail').value;
+        if (!email.endsWith('@amity.edu')) {
+            showNotification('Please enter a valid Amity email.', true);
+            return;
+        }
+        studentModal.style.display = 'none';
+        menuGrid.style.display = 'grid';
+        showNotification('Welcome Student!');
+    });
+
+    document.getElementById('staffForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        staffModal.style.display = 'none';
+        menuGrid.style.display = 'grid';
+        showNotification('Welcome Staff!');
+    });
+    </script>
+</body>
+</html>
